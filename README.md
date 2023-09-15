@@ -19,6 +19,7 @@
 - su dung `useNavigate` de chuyen tiep page
 - khi user da login -> can redirect vao dashboard; khi chua login can y/c **login**
 - khi user login login se hien thi `loading` = cach su dung `react-spinners`; co the xem mau demo de su dung
+- dung `intercepter -axios` xu ly y/c truoc khi dc gui di || sau khi nhan duoc phan hoi tu api; ap dung de truyen access-token & xu ly refresh token; khi bi 2 lan call refresh-token => comment lai strick-mode o index.js (do la phan cai dat cho dev)
 
 ## su dung spinners
 
