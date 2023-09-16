@@ -21,6 +21,11 @@
 - khi user login login se hien thi `loading` = cach su dung `react-spinners`; co the xem mau demo de su dung
 - dung `intercepter -axios` xu ly y/c truoc khi dc gui di || sau khi nhan duoc phan hoi tu api; ap dung de truyen access-token & xu ly refresh token; khi bi 2 lan call refresh-token => comment lai strick-mode o index.js (do la phan cai dat cho dev)
 
+### noi dung code 02
+
+- sua sidebar; tao component `users  list`
+- tach common component, su dung globalLoading khi get.api
+
 ## su dung spinners
 
 - can truyen trang thai login tu comp `login` sang `layout` - giao dien tong; su dung prop | Redux | react-context
@@ -28,4 +33,4 @@
 
 # **time**
 
-`32:28`
+`21:28`

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -17,141 +18,70 @@ const Sidebar = () => {
                 </div>
                 Dashboard
               </a>
+              {/* interface */}
               <div className="sb-sidenav-menu-heading">Interface</div>
               <a
                 className="nav-link collapsed"
                 href="#"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapseLayouts"
+                data-bs-target="#collapseUsers"
                 aria-expanded="false"
-                aria-controls="collapseLayouts"
+                aria-controls="collapseUsers"
               >
                 <div className="sb-nav-link-icon">
-                  <i className="fas fa-columns"></i>
+                  <i className="fas fa-user"></i>
                 </div>
-                Layouts
+                Users
                 <div className="sb-sidenav-collapse-arrow">
                   <i className="fas fa-angle-down"></i>
                 </div>
               </a>
               <div
                 className="collapse"
-                id="collapseLayouts"
+                id="collapseUsers"
                 aria-labelledby="headingOne"
                 data-bs-parent="#sidenavAccordion"
               >
                 <nav className="sb-sidenav-menu-nested nav">
-                  <a className="nav-link" href="layout-static.html">
-                    Static Navigation
-                  </a>
-                  <a className="nav-link" href="layout-sidenav-light.html">
-                    Light Sidenav
-                  </a>
+                  <Link to="/users" className="nav-link">
+                    Add User
+                  </Link>
+                  <Link to="/users" className="nav-link">
+                    Users List
+                  </Link>
                 </nav>
               </div>
               <a
                 className="nav-link collapsed"
                 href="#"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapsePages"
+                data-bs-target="#collapsePosts"
                 aria-expanded="false"
-                aria-controls="collapsePages"
+                aria-controls="collapsePosts"
               >
                 <div className="sb-nav-link-icon">
-                  <i className="fas fa-book-open"></i>
+                  <i className="fas fa-columns"></i>
                 </div>
-                Pages
+                Posts
                 <div className="sb-sidenav-collapse-arrow">
                   <i className="fas fa-angle-down"></i>
                 </div>
               </a>
               <div
                 className="collapse"
-                id="collapsePages"
-                aria-labelledby="headingTwo"
+                id="collapsePosts"
+                aria-labelledby="headingOne"
                 data-bs-parent="#sidenavAccordion"
               >
-                <nav
-                  className="sb-sidenav-menu-nested nav accordion"
-                  id="sidenavAccordionPages"
-                >
-                  <a
-                    className="nav-link collapsed"
-                    href="#"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#pagesCollapseAuth"
-                    aria-expanded="false"
-                    aria-controls="pagesCollapseAuth"
-                  >
-                    Authentication
-                    <div className="sb-sidenav-collapse-arrow">
-                      <i className="fas fa-angle-down"></i>
-                    </div>
-                  </a>
-                  <div
-                    className="collapse"
-                    id="pagesCollapseAuth"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordionPages"
-                  >
-                    <nav className="sb-sidenav-menu-nested nav">
-                      <a className="nav-link" href="login.html">
-                        Login
-                      </a>
-                      <a className="nav-link" href="register.html">
-                        Register
-                      </a>
-                      <a className="nav-link" href="password.html">
-                        Forgot Password
-                      </a>
-                    </nav>
-                  </div>
-                  <a
-                    className="nav-link collapsed"
-                    href="#"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#pagesCollapseError"
-                    aria-expanded="false"
-                    aria-controls="pagesCollapseError"
-                  >
-                    Error
-                    <div className="sb-sidenav-collapse-arrow">
-                      <i className="fas fa-angle-down"></i>
-                    </div>
-                  </a>
-                  <div
-                    className="collapse"
-                    id="pagesCollapseError"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordionPages"
-                  >
-                    <nav className="sb-sidenav-menu-nested nav">
-                      <a className="nav-link" href="401.html">
-                        401 Page
-                      </a>
-                      <a className="nav-link" href="404.html">
-                        404 Page
-                      </a>
-                      <a className="nav-link" href="500.html">
-                        500 Page
-                      </a>
-                    </nav>
-                  </div>
+                <nav className="sb-sidenav-menu-nested nav">
+                  <Link to="/users" className="nav-link">
+                    Add Post
+                  </Link>
+                  <Link to="/users" className="nav-link">
+                    Posts List
+                  </Link>
                 </nav>
               </div>
-              <div className="sb-sidenav-menu-heading">Addons</div>
-              <a className="nav-link" href="charts.html">
-                <div className="sb-nav-link-icon">
-                  <i className="fas fa-chart-area"></i>
-                </div>
-                Charts
-              </a>
-              <a className="nav-link" href="tables.html">
-                <div className="sb-nav-link-icon">
-                  <i className="fas fa-table"></i>
-                </div>
-                Tables
-              </a>
             </div>
           </div>
           <div className="sb-sidenav-footer">

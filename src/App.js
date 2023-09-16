@@ -10,6 +10,7 @@ import PrivateRoutes from "./layouts/PrivateRoutes";
 import PublicRoutes from "./components/PublicRoutes";
 import Layout from "./layouts/Layout";
 import { toast } from "react-toastify";
+import UserList from "./components/user/UserList";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route element={<Main />}>
           <Route element={<PrivateRoutes />}>
             <Route path="/" element={<Dashboar />} />
+            <Route path="/users" element={<UserList />} />
           </Route>
         </Route>
         <Route element={<PublicRoutes />}>
