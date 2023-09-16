@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 const DataTable = (props) => {
-  const { name, data, columns } = props;
+  const { name, data, columns, currentPage, numOfPage, onPageChange } = props;
 
   const renderHeaders = () => {
     return columns.map((col, index) => <th key={index}>{col.name}</th>);
@@ -21,6 +21,44 @@ const DataTable = (props) => {
     });
     return html;
   };
+
+  //render pagination
+  const renderPagination = () => {
+    const pagination = [];
+    const nextPage = currentPage + 1 > numOfPage ? null : currentPage + 1;
+    const prevPage = currentPage - 1 < 1 ? null : currentPage - 1;
+
+    pagination.push(
+      <li key="prev" className={prevPage ? "page-item" : "page-item disabled"}>
+        <button className="page-link" onClick={() => onPageChange(prevPage)}>
+          &laquo;
+        </button>
+      </li>
+    );
+    for (let i = 1; i <= numOfPage; i++) {
+      pagination.push(
+        <li
+          key={i}
+          className={currentPage === i ? "page-item active" : "page-item"}
+        >
+          <button onClick={() => onPageChange(i)} className="page-link">
+            {i}
+          </button>
+        </li>
+      );
+    }
+
+    pagination.push(
+      <li key="next" className={nextPage ? "page-item" : "page-item disabled"}>
+        <button className="page-link" onClick={() => onPageChange(nextPage)}>
+          &raquo;
+        </button>
+      </li>
+    );
+
+    return pagination;
+  };
+
   return (
     <>
       <div className="card mb-4">
@@ -72,31 +110,7 @@ const DataTable = (props) => {
             <div className="row">
               <div className="col-sm-12 col-md-7">
                 <ul className="pagination justify-content-end">
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
+                  {renderPagination()}
                 </ul>
               </div>
             </div>

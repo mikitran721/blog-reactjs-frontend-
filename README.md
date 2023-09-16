@@ -25,6 +25,8 @@
 
 - sua sidebar; tao component `users  list`
 - tach common component, su dung globalLoading khi get.api
+- tao table hien thi user list
+- su dung pagination cho user list;
 
 ## su dung spinners
 

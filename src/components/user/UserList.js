@@ -7,6 +7,9 @@ import * as actions from "../../redux/actions";
 const UserList = () => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
+  const [numOfPage, setNumOfPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(1);
 
   //column table
   const columns = [
@@ -52,16 +55,21 @@ const UserList = () => {
   //goi api get users
   useEffect(() => {
     dispatch(actions.controlLoading(true));
-    requestApi(`/users`, "GET", [])
+    // them tham so cho pagination -> chen vao cung endpoint
+    let query = `?items_per_page=${itemsPerPage}&page=${currentPage}`;
+
+    requestApi(`/users${query}`, "GET", [])
       .then((response) => {
+        console.log(">> user list api: ", response.data);
         setUsers(response.data.data);
+        setNumOfPage(response.data.lastPage);
         dispatch(actions.controlLoading(false));
       })
       .catch((err) => {
         console.log("Loi khi get users tu api: ", err);
         dispatch(actions.controlLoading(false));
       });
-  }, []);
+  }, [currentPage, itemsPerPage]);
 
   return (
     <>
@@ -75,7 +83,14 @@ const UserList = () => {
               </li>
               <li className="breadcrumb-item active">Tables</li>
             </ol>
-            <DataTable name="List User" data={users} columns={columns} />
+            <DataTable
+              name="List User"
+              data={users}
+              columns={columns}
+              numOfPage={numOfPage}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
           </div>
         </main>
       </div>
