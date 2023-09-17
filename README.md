@@ -27,6 +27,8 @@
 - tach common component, su dung globalLoading khi get.api
 - tao table hien thi user list
 - su dung pagination cho user list;
+- change list theo items-per-page; neu chi co 1 page thi an pagination
+- `live search` khi user ngung nhap nd moi goi api; du dung delaydebounce (setTimeout)
 
 ## su dung spinners
 
@@ -35,4 +37,4 @@
 
 # **time**
 
-`21:28`
+`41:28`

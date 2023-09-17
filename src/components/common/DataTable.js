@@ -1,8 +1,18 @@
 import { render } from "@testing-library/react";
 import React from "react";
+import LiveSearch from "./LiveSearch";
 
 const DataTable = (props) => {
-  const { name, data, columns, currentPage, numOfPage, onPageChange } = props;
+  const {
+    name,
+    data,
+    columns,
+    currentPage,
+    numOfPage,
+    onPageChange,
+    onChangeItemsPerPage,
+    onKeySearch,
+  } = props;
 
   const renderHeaders = () => {
     return columns.map((col, index) => <th key={index}>{col.name}</th>);
@@ -59,6 +69,11 @@ const DataTable = (props) => {
     return pagination;
   };
 
+  // handle change items-per-page
+  const onChangeOption = (event) => {
+    const target = event.target;
+    onChangeItemsPerPage(target.value);
+  };
   return (
     <>
       <div className="card mb-4">
@@ -72,6 +87,7 @@ const DataTable = (props) => {
               <label className="d-inline-flex">
                 Show
                 <select
+                  onChange={onChangeOption}
                   name=""
                   id=""
                   className="form-select form-select-sm ms-1 me-1"
@@ -89,11 +105,7 @@ const DataTable = (props) => {
             <div className="col-sm-12 col-md-6">
               <label className="d-inline-flex float-end">
                 Search:
-                <input
-                  type="search"
-                  placeholder="Email or Name"
-                  className="form-control form-control-sm ms-1"
-                />
+                <LiveSearch onKeySearch={onKeySearch} />
               </label>
             </div>
 
@@ -107,13 +119,16 @@ const DataTable = (props) => {
               </tfoot>
             </table>
 
-            <div className="row">
-              <div className="col-sm-12 col-md-7">
-                <ul className="pagination justify-content-end">
-                  {renderPagination()}
-                </ul>
+            {/* neu co 1 page thi an pagination */}
+            {numOfPage > 1 && (
+              <div className="row">
+                <div className="col-sm-12 col-md-7">
+                  <ul className="pagination justify-content-end">
+                    {renderPagination()}
+                  </ul>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

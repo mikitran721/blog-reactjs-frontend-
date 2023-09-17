@@ -10,6 +10,7 @@ const UserList = () => {
   const [numOfPage, setNumOfPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(1);
+  const [searchString, setSearchString] = useState("");
 
   //column table
   const columns = [
@@ -56,11 +57,11 @@ const UserList = () => {
   useEffect(() => {
     dispatch(actions.controlLoading(true));
     // them tham so cho pagination -> chen vao cung endpoint
-    let query = `?items_per_page=${itemsPerPage}&page=${currentPage}`;
+    let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`;
 
     requestApi(`/users${query}`, "GET", [])
       .then((response) => {
-        console.log(">> user list api: ", response.data);
+        // console.log(">> user list api: ", response.data);
         setUsers(response.data.data);
         setNumOfPage(response.data.lastPage);
         dispatch(actions.controlLoading(false));
@@ -69,7 +70,7 @@ const UserList = () => {
         console.log("Loi khi get users tu api: ", err);
         dispatch(actions.controlLoading(false));
       });
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, searchString]);
 
   return (
     <>
@@ -90,6 +91,11 @@ const UserList = () => {
               numOfPage={numOfPage}
               currentPage={currentPage}
               onPageChange={setCurrentPage}
+              onChangeItemsPerPage={setItemsPerPage}
+              onKeySearch={(keyWord) => {
+                console.log(">> tu khoa search ", keyWord);
+                setSearchString(keyWord);
+              }}
             />
           </div>
         </main>
