@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LiveSearch from "./LiveSearch";
 
 const DataTable = (props) => {
@@ -12,17 +12,63 @@ const DataTable = (props) => {
     onPageChange,
     onChangeItemsPerPage,
     onKeySearch,
+    onSelectedRow,
   } = props;
+
+  // state for multiple delete
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const renderHeaders = () => {
     return columns.map((col, index) => <th key={index}>{col.name}</th>);
   };
+
+  const onClickCheckbox = (event) => {
+    let checked = event.target.checked;
+    let value = event.target.value;
+    if (checked) {
+      if (!selectedRows.includes(value)) {
+        setSelectedRows([...selectedRows, value]);
+      }
+    } else {
+      // neu ko check, se xoa neu co o selected.rows
+      let index = selectedRows.indexOf(value);
+      const temp = [...selectedRows];
+      temp.splice(index, 1);
+      setSelectedRows(temp);
+    }
+  };
+
+  // select all to delete / current page
+  const onSelectAll = (event) => {
+    if (event.target.checked) {
+      const temp = data.map((element) => {
+        return String(element.id);
+      });
+      setSelectedRows(temp);
+    } else {
+      setSelectedRows([]);
+    }
+  };
+
+  useEffect(() => {
+    console.log(">> checkbox: ", selectedRows);
+    onSelectedRow(selectedRows);
+  }, [selectedRows]);
 
   //render table data
   const renderData = () => {
     let html = data.map((item, index) => {
       return (
         <tr key={index}>
+          <td>
+            <input
+              checked={selectedRows.includes(String(item.id)) ? true : false}
+              value={item.id}
+              onChange={onClickCheckbox}
+              type="checkbox"
+              className="form-check-input"
+            />
+          </td>
           {columns.map((col, ind) => {
             return <td key={ind}>{col.element(item)}</td>;
           })}
@@ -111,11 +157,28 @@ const DataTable = (props) => {
 
             <table className="table table-striped table-hover">
               <thead>
-                <tr>{renderHeaders()}</tr>
+                <tr>
+                  <th>
+                    <input
+                      checked={
+                        selectedRows.length === data.length && data.length > 0
+                          ? true
+                          : false
+                      }
+                      onChange={onSelectAll}
+                      type="checkbox"
+                      className="form-check-input"
+                    />
+                  </th>
+                  {renderHeaders()}
+                </tr>
               </thead>
               <tbody>{renderData()}</tbody>
               <tfoot>
-                <tr>{renderHeaders()}</tr>
+                <tr>
+                  <th>...</th>
+                  {renderHeaders()}
+                </tr>
               </tfoot>
             </table>
 

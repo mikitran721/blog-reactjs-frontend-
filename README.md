@@ -8,6 +8,7 @@
 - su dung `reac-toastify` de hien thi thong bao
 - cai dat `npm i react-spinners` cai dat loading... khi user login;
 - cai dat `npm i redux react-redux`
+- cai dat `npm i react-bootstrap`
 
 # noi dung code
 
@@ -29,6 +30,9 @@
 - su dung pagination cho user list;
 - change list theo items-per-page; neu chi co 1 page thi an pagination
 - `live search` khi user ngung nhap nd moi goi api; du dung delaydebounce (setTimeout)
+- delete one & multiple blogs; delete.multiple voi all items/current page; neu nguoi dung chon all items tren page hien thoi thi checkall cung duoc checked.
+- su dung Modal.boostrap de su dung box.confirm
+-
 
 ## su dung spinners
 
@@ -37,4 +41,4 @@
 
 # **time**
 
-`41:28`
+`16:28`

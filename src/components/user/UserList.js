@@ -3,6 +3,7 @@ import DataTable from "../common/DataTable";
 import requestApi from "../../helpers/api";
 import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
+import { Button, Modal } from "react-bootstrap";
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,11 @@ const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(1);
   const [searchString, setSearchString] = useState("");
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [deletedItem, setDeleteItem] = useState(null);
+  const [deleteType, setDeleteType] = useState("single");
+  const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(Date.now());
 
   //column table
   const columns = [
@@ -45,13 +51,65 @@ const UserList = () => {
           <button className="btn btn-sm btn-warning me-1" type="button">
             <i className="fa fa-pencil"> &nbsp; Edit</i>
           </button>
-          <button className="btn btn-sm btn-danger me-1" type="button">
+          <button
+            className="btn btn-sm btn-danger me-1"
+            type="button"
+            onClick={() => handleDelete(row.id)}
+          >
             <i className="fa fa-trash"> &nbsp; Delete</i>
           </button>
         </>
       ),
     },
   ];
+
+  // func handle delete
+  const handleDelete = (id) => {
+    // console.log(">> single delete id ", id);
+    setShowModal(true);
+    setDeleteItem(id);
+    setDeleteType("single");
+  };
+
+  // func handleMultiDelete
+  const handleMultiDelete = () => {
+    // console.log(">> Func MultiDelete ", selectedRows);
+    setShowModal(true);
+    setDeleteType("multi");
+  };
+
+  // request deleteApi
+  const requestDeletedApi = () => {
+    //kt deleteType
+    if (deleteType === "single") {
+      dispatch(actions.controlLoading(true));
+      requestApi(`/users/${deletedItem}`, "DELETE", [])
+        .then((response) => {
+          setShowModal(false);
+          setRefresh(Date.now());
+          dispatch(actions.controlLoading(false));
+        })
+        .catch((err) => {
+          console.log(">> Co loi khi xoa user: ", err);
+          setShowModal(false);
+          dispatch(actions.controlLoading(false));
+        });
+    } else {
+      dispatch(actions.controlLoading(true));
+      requestApi(`/users/multiple?ids=${selectedRows.toString()}`, "DELETE", [])
+        .then((response) => {
+          setShowModal(false);
+          setRefresh(Date.now());
+          setSelectedRows([]);
+          dispatch(actions.controlLoading(false));
+        })
+        .catch((err) => {
+          console.log(">> Co loi khi xoa user: ", err);
+          setShowModal(false);
+          dispatch(actions.controlLoading(false));
+        });
+    }
+  };
 
   //goi api get users
   useEffect(() => {
@@ -70,7 +128,7 @@ const UserList = () => {
         console.log("Loi khi get users tu api: ", err);
         dispatch(actions.controlLoading(false));
       });
-  }, [currentPage, itemsPerPage, searchString]);
+  }, [currentPage, itemsPerPage, searchString, refresh]);
 
   return (
     <>
@@ -84,6 +142,20 @@ const UserList = () => {
               </li>
               <li className="breadcrumb-item active">Tables</li>
             </ol>
+            <div className="mb-3">
+              <button type="button" className="btn btn-sm btn-success me-2">
+                <i className="fa fa-plus"></i>&nbsp;Add new
+              </button>
+              {selectedRows.length > 0 && (
+                <button
+                  onClick={handleMultiDelete}
+                  type="button"
+                  className="btn btn-sm btn-danger"
+                >
+                  <i className="fa fa-trash"></i>&nbsp;Delete
+                </button>
+              )}
+            </div>
             <DataTable
               name="List User"
               data={users}
@@ -93,12 +165,28 @@ const UserList = () => {
               onPageChange={setCurrentPage}
               onChangeItemsPerPage={setItemsPerPage}
               onKeySearch={(keyWord) => {
-                console.log(">> tu khoa search ", keyWord);
+                // console.log(">> tu khoa search ", keyWord);
                 setSearchString(keyWord);
+              }}
+              onSelectedRow={(rows) => {
+                setSelectedRows(rows);
               }}
             />
           </div>
         </main>
+        {/* Modal.bootstrap confirmation */}
+        <Modal show={showModal} onHide={() => setShowModal(false)} size="sm">
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure want to delete?</Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => setShowModal(false)}>Close</Button>
+            <Button className="btn-danger" onClick={requestDeletedApi}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </>
   );
