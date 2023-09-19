@@ -1,16 +1,37 @@
 import React, { useEffect, useState } from "react";
 import requestApi from "../helpers/api";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import * as actions from "../redux/actions";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [dashboardData, setDashboardData] = useState({});
 
   useEffect(() => {
-    requestApi("/users", "GET", [])
+    /* requestApi("/users", "GET", [])
       .then((response) => {
         console.log(">> get dashboard info - all posts ", response);
         setDashboardData({ ...dashboardData, totalUser: response.data.total });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)); */
+    const promiseUser = requestApi("/users", "GET");
+    const promisePost = requestApi("/posts", "GET");
+    dispatch(actions.controlLoading(true));
+    Promise.all([promisePost, promiseUser])
+      .then((res) => {
+        console.log(">> du lieu tra ve tu api ", res);
+        setDashboardData({
+          ...dashboardData,
+          totalUser: res[0].data.total,
+          totalPost: res[1].data.total,
+        });
+        dispatch(actions.controlLoading(false));
+      })
+      .catch((err) => {
+        dispatch(actions.controlLoading(false));
+        console.log(">>Loi khi truy van api get users | Posts");
+      });
   }, []);
   return (
     <>
@@ -22,59 +43,42 @@ const Dashboard = () => {
               <li className="breadcrumb-item active">Dashboard</li>
             </ol>
             <div className="row">
-              <div className="col-xl-3 col-md-6">
+              <div className="col-xl-4 col-md-6">
                 <div className="card bg-primary text-white mb-4">
                   <div className="card-body">
                     Total Users
-                    {dashboardData.totalUser && (
-                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        {dashboardData.totalUser}
-                      </span>
-                    )}
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {dashboardData.totalUser}
+                    </span>
                   </div>
                   <div className="card-footer d-flex align-items-center justify-content-between">
-                    <a className="small text-white stretched-link" href="#">
+                    <Link
+                      to="/users"
+                      className="small text-white stretched-link"
+                    >
                       View Details
-                    </a>
+                    </Link>
                     <div className="small text-white">
                       <i className="fas fa-angle-right"></i>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="col-xl-3 col-md-6">
+              <div className="col-xl-4 col-md-6">
                 <div className="card bg-warning text-white mb-4">
-                  <div className="card-body">Warning Card</div>
-                  <div className="card-footer d-flex align-items-center justify-content-between">
-                    <a className="small text-white stretched-link" href="#">
-                      View Details
-                    </a>
-                    <div className="small text-white">
-                      <i className="fas fa-angle-right"></i>
-                    </div>
+                  <div className="card-body">
+                    Total posts
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {dashboardData.totalPost}
+                    </span>
                   </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6">
-                <div className="card bg-success text-white mb-4">
-                  <div className="card-body">Success Card</div>
                   <div className="card-footer d-flex align-items-center justify-content-between">
-                    <a className="small text-white stretched-link" href="#">
+                    <Link
+                      to="/posts"
+                      className="small text-white stretched-link"
+                    >
                       View Details
-                    </a>
-                    <div className="small text-white">
-                      <i className="fas fa-angle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6">
-                <div className="card bg-danger text-white mb-4">
-                  <div className="card-body">Danger Card</div>
-                  <div className="card-footer d-flex align-items-center justify-content-between">
-                    <a className="small text-white stretched-link" href="#">
-                      View Details
-                    </a>
+                    </Link>
                     <div className="small text-white">
                       <i className="fas fa-angle-right"></i>
                     </div>
@@ -84,18 +88,6 @@ const Dashboard = () => {
             </div>
           </div>
         </main>
-        <footer className="py-4 bg-light mt-auto">
-          <div className="container-fluid px-4">
-            <div className="d-flex align-items-center justify-content-between small">
-              <div className="text-muted">Copyright &copy; Miki.Tran 2023</div>
-              <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </>
   );

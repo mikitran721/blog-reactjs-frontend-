@@ -30,12 +30,11 @@
 - `live search` khi user ngung nhap nd moi goi api; du dung delaydebounce (setTimeout)
 - delete one & multiple blogs; delete.multiple voi all items/current page; neu nguoi dung chon all items tren page hien thoi thi checkall cung duoc checked.
 - su dung Modal.boostrap de su dung box.confirm
+- them usermoi, update user; su dung package de validate add new-user `react-hook-form`: giam luong render, rerender, validate form, quan ly du lieu form.
 
 ### noi dung code 02
 
-- them usermoi, update user; su dung package de validate add new-user `react-hook-form`: giam luong render, rerender, validate form, quan ly du lieu form.
-
--
+- handle multiple request api - sd Promise.all(), page 404
 
 ## su dung spinners
 
