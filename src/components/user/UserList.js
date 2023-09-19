@@ -4,13 +4,14 @@ import requestApi from "../../helpers/api";
 import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
 import { Button, Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const UserList = () => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [numOfPage, setNumOfPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [searchString, setSearchString] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
   const [deletedItem, setDeleteItem] = useState(null);
@@ -48,9 +49,12 @@ const UserList = () => {
       name: "Actions",
       element: (row) => (
         <>
-          <button className="btn btn-sm btn-warning me-1" type="button">
+          <Link
+            to={`/user/edit/${row.id}`}
+            className="btn btn-sm btn-warning me-1"
+          >
             <i className="fa fa-pencil"> &nbsp; Edit</i>
-          </button>
+          </Link>
           <button
             className="btn btn-sm btn-danger me-1"
             type="button"
@@ -143,9 +147,9 @@ const UserList = () => {
               <li className="breadcrumb-item active">Tables</li>
             </ol>
             <div className="mb-3">
-              <button type="button" className="btn btn-sm btn-success me-2">
+              <Link className="btn btn-sm btn-success me-2" to="/user/add">
                 <i className="fa fa-plus"></i>&nbsp;Add new
-              </button>
+              </Link>
               {selectedRows.length > 0 && (
                 <button
                   onClick={handleMultiDelete}

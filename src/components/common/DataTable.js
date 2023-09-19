@@ -51,7 +51,7 @@ const DataTable = (props) => {
   };
 
   useEffect(() => {
-    console.log(">> checkbox: ", selectedRows);
+    // console.log(">> checkbox: ", selectedRows);
     onSelectedRow(selectedRows);
   }, [selectedRows]);
 
@@ -141,7 +141,9 @@ const DataTable = (props) => {
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
-                  <option value="5">5</option>
+                  <option selected={true} value="5">
+                    5
+                  </option>
                   <option value="10">10</option>
                 </select>
                 Entries

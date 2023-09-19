@@ -9,6 +9,7 @@
 - cai dat `npm i react-spinners` cai dat loading... khi user login;
 - cai dat `npm i redux react-redux`
 - cai dat `npm i react-bootstrap`
+- cai dat `npm i react-hook-form`
 
 # noi dung code
 
@@ -21,9 +22,6 @@
 - khi user da login -> can redirect vao dashboard; khi chua login can y/c **login**
 - khi user login login se hien thi `loading` = cach su dung `react-spinners`; co the xem mau demo de su dung
 - dung `intercepter -axios` xu ly y/c truoc khi dc gui di || sau khi nhan duoc phan hoi tu api; ap dung de truyen access-token & xu ly refresh token; khi bi 2 lan call refresh-token => comment lai strick-mode o index.js (do la phan cai dat cho dev)
-
-### noi dung code 02
-
 - sua sidebar; tao component `users  list`
 - tach common component, su dung globalLoading khi get.api
 - tao table hien thi user list
@@ -32,6 +30,11 @@
 - `live search` khi user ngung nhap nd moi goi api; du dung delaydebounce (setTimeout)
 - delete one & multiple blogs; delete.multiple voi all items/current page; neu nguoi dung chon all items tren page hien thoi thi checkall cung duoc checked.
 - su dung Modal.boostrap de su dung box.confirm
+
+### noi dung code 02
+
+- them usermoi, update user; su dung package de validate add new-user `react-hook-form`: giam luong render, rerender, validate form, quan ly du lieu form.
+
 -
 
 ## su dung spinners
