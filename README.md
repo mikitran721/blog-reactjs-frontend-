@@ -36,10 +36,11 @@
 - display & update avatar: display avatar tu api; hien thi hinh khi user chon img moi;
 - upload image = `FormData`; khi user chua update avatar -> nut `update` se an.
 - List posts; format date display voi `npm i moment`
+- create & edit post using `Ckeditor5 for react`; get list `category`
 
 ### noi dung code 02
 
-- create & edit post using `Ckeditor5 for react`; get list `category`
+- config CKEditor import images; can api upload image cho CKEditor len server
 
 ## su dung spinners
 

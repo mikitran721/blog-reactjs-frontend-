@@ -7,6 +7,7 @@ import requestApi from "../../helpers/api";
 import { toast } from "react-toastify";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import CustomUploadAdapter from "../../helpers/CustomUploadAdapter";
 
 const PostAdd = () => {
   // state luu thumbnail khi user chon
@@ -81,6 +82,13 @@ const PostAdd = () => {
     }
   };
 
+  // function for CKEditor
+  function uploadPlugin(editor) {
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+      return new CustomUploadAdapter(loader);
+    };
+  }
+
   return (
     <>
       <div id="layoutSidenav_content">
@@ -151,6 +159,9 @@ const PostAdd = () => {
                             // console.log(">> data from CKEditor: ", data);
                             setValue("description", data);
                             trigger("description");
+                          }}
+                          config={{
+                            extraPlugins: [uploadPlugin],
                           }}
                         />
                         {errors.description && (
