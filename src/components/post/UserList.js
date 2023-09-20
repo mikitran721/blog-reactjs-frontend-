@@ -5,9 +5,8 @@ import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
 import { Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { formatDateTime } from "../../helpers/common";
 
-const UserList = () => {
+const PostList = () => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [numOfPage, setNumOfPage] = useState(1);
@@ -40,11 +39,11 @@ const UserList = () => {
     },
     {
       name: "Created at",
-      element: (row) => formatDateTime(row.created_at),
+      element: (row) => row.created_at,
     },
     {
       name: "Updated at",
-      element: (row) => formatDateTime(row.updated_at),
+      element: (row) => row.updated_at,
     },
     {
       name: "Actions",
@@ -197,4 +196,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default PostList;

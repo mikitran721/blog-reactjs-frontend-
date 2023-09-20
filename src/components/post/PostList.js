@@ -7,9 +7,9 @@ import { Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { formatDateTime } from "../../helpers/common";
 
-const UserList = () => {
+const PostList = () => {
   const dispatch = useDispatch();
-  const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [numOfPage, setNumOfPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -27,16 +27,22 @@ const UserList = () => {
       element: (row) => row.id,
     },
     {
-      name: "First name",
-      element: (row) => row.firstName,
+      name: "Title",
+      element: (row) => row.title,
     },
     {
-      name: "Last name",
-      element: (row) => row.lastName,
+      name: "Thumbnail",
+      element: (row) => (
+        <img
+          width="70px"
+          alt="thumbnail"
+          src={process.env.REACT_APP_API_URL + "/" + row.thumbnail}
+        />
+      ),
     },
     {
-      name: "Email",
-      element: (row) => row.email,
+      name: "Status",
+      element: (row) => (row.status === 1 ? "Active" : "Inactive"),
     },
     {
       name: "Created at",
@@ -68,6 +74,11 @@ const UserList = () => {
     },
   ];
 
+  // function formatDateTime
+  /* const formatDateTime = (datetime) => {
+    return moment(datetime).format("DD/MM/YYYY h:mm:ss A");
+  }; */
+
   // func handle delete
   const handleDelete = (id) => {
     // console.log(">> single delete id ", id);
@@ -88,7 +99,7 @@ const UserList = () => {
     //kt deleteType
     if (deleteType === "single") {
       dispatch(actions.controlLoading(true));
-      requestApi(`/users/${deletedItem}`, "DELETE", [])
+      requestApi(`/posts/${deletedItem}`, "DELETE", [])
         .then((response) => {
           setShowModal(false);
           setRefresh(Date.now());
@@ -101,7 +112,7 @@ const UserList = () => {
         });
     } else {
       dispatch(actions.controlLoading(true));
-      requestApi(`/users/multiple?ids=${selectedRows.toString()}`, "DELETE", [])
+      requestApi(`/posts/multiple?ids=${selectedRows.toString()}`, "DELETE", [])
         .then((response) => {
           setShowModal(false);
           setRefresh(Date.now());
@@ -122,15 +133,15 @@ const UserList = () => {
     // them tham so cho pagination -> chen vao cung endpoint
     let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`;
 
-    requestApi(`/users${query}`, "GET", [])
+    requestApi(`/posts${query}`, "GET", [])
       .then((response) => {
         // console.log(">> user list api: ", response.data);
-        setUsers(response.data.data);
+        setPosts(response.data.data);
         setNumOfPage(response.data.lastPage);
         dispatch(actions.controlLoading(false));
       })
       .catch((err) => {
-        console.log("Loi khi get users tu api: ", err);
+        console.log("Loi khi get posts tu api: ", err);
         dispatch(actions.controlLoading(false));
       });
   }, [currentPage, itemsPerPage, searchString, refresh]);
@@ -162,8 +173,8 @@ const UserList = () => {
               )}
             </div>
             <DataTable
-              name="List User"
-              data={users}
+              name="List Post"
+              data={posts}
               columns={columns}
               numOfPage={numOfPage}
               currentPage={currentPage}
@@ -197,4 +208,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default PostList;

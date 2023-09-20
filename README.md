@@ -32,11 +32,12 @@
 - su dung Modal.boostrap de su dung box.confirm
 - them usermoi, update user; su dung package de validate add new-user `react-hook-form`: giam luong render, rerender, validate form, quan ly du lieu form.
 - handle multiple request api - sd Promise.all(), page 404
+- display & update avatar: display avatar tu api; hien thi hinh khi user chon img moi;
+- upload image = `FormData`; khi user chua update avatar -> nut `update` se an.
 
 ### noi dung code 02
 
-- display & update avatar: display avatar tu api; hien thi hinh khi user chon img moi;
-- upload image = `FormData`; khi user chua update avatar -> nut `update` se an.
+- List posts; format date display voi `npm i moment`
 
 ## su dung spinners
 
