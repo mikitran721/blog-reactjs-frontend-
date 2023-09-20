@@ -18,7 +18,7 @@ const UserAdd = () => {
 
   // func handleSubmitFormAdd
   const handleSubmitFormAdd = async (data) => {
-    console.log(">> data for add new user: ", data);
+    // console.log(">> data for add new user: ", data);
     dispatch(actions.controlLoading(true));
     try {
       const res = await requestApi(`/users`, "POST", data);

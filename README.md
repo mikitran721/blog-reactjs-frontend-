@@ -10,6 +10,7 @@
 - cai dat `npm i redux react-redux`
 - cai dat `npm i react-bootstrap`
 - cai dat `npm i react-hook-form`
+- cai dat `npm install --save @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic`
 
 # noi dung code
 
@@ -34,10 +35,11 @@
 - handle multiple request api - sd Promise.all(), page 404
 - display & update avatar: display avatar tu api; hien thi hinh khi user chon img moi;
 - upload image = `FormData`; khi user chua update avatar -> nut `update` se an.
+- List posts; format date display voi `npm i moment`
 
 ### noi dung code 02
 
-- List posts; format date display voi `npm i moment`
+- create & edit post using `Ckeditor5 for react`; get list `category`
 
 ## su dung spinners
 
@@ -46,4 +48,4 @@
 
 # **time**
 
-`16:28`
+`28:28`

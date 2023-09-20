@@ -31,6 +31,10 @@ const PostList = () => {
       element: (row) => row.title,
     },
     {
+      name: "Summary",
+      element: (row) => row.summary,
+    },
+    {
       name: "Thumbnail",
       element: (row) => (
         <img
@@ -57,17 +61,17 @@ const PostList = () => {
       element: (row) => (
         <>
           <Link
-            to={`/user/edit/${row.id}`}
+            to={`/post/edit/${row.id}`}
             className="btn btn-sm btn-warning me-1"
           >
-            <i className="fa fa-pencil"> &nbsp; Edit</i>
+            <i className="fa fa-pencil"></i>
           </Link>
           <button
             className="btn btn-sm btn-danger me-1"
             type="button"
             onClick={() => handleDelete(row.id)}
           >
-            <i className="fa fa-trash"> &nbsp; Delete</i>
+            <i className="fa fa-trash"></i>
           </button>
         </>
       ),
@@ -159,7 +163,7 @@ const PostList = () => {
               <li className="breadcrumb-item active">User list</li>
             </ol>
             <div className="mb-3">
-              <Link className="btn btn-sm btn-success me-2" to="/user/add">
+              <Link className="btn btn-sm btn-success me-2" to="/post/add">
                 <i className="fa fa-plus"></i>&nbsp;Add new
               </Link>
               {selectedRows.length > 0 && (
